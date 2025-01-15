@@ -185,7 +185,7 @@ public class Console {
     public void filterPatientsByDiagnosis(){
         System.out.println("Enter the diagnosis to filter by");
         String diagnosis=scanner.nextLine();
-        service.filterPatientsByDiagnosis(diagnosis);
+        (service.filterPatientsByDiagnosis(diagnosis)).forEach(System.out::println);
     }
 
     public void customersThatWerePrescribedGivenMedicine(){
