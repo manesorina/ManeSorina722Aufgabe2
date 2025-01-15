@@ -62,9 +62,9 @@ public class Console {
                 case 6 -> printAllPatients();
                 case 7 -> addPatient();
                 case 8 -> deletePatient();
-                case 9 -> updatePationtName();
+                case 9 -> updatePatientName();
                 case 10 -> updatePationtAge();
-                case 11 -> updatePationtDiagnosis();
+                case 11 -> updatePatientDiagnosis();
                 case 12 -> prescribeMedicationToPatient();
                 case 13 -> deletePrescribedMedicationForPatitent();
                 case 14 -> filterPatientsByDiagnosis();
@@ -98,7 +98,7 @@ public class Console {
     public void deleteMedication(){
         System.out.println("Enter the name of the medicine to delete");
         String name=scanner.nextLine();
-        service.deleteFMedicine(name);
+        service.deleteMedicine(name);
     }
 
     public void updateMedicationPrice(){
@@ -106,6 +106,130 @@ public class Console {
         String name=scanner.nextLine();
         int newPrice= scanner.nextInt();
         scanner.nextLine();
+        service.updateMedicinePrice(name,newPrice);
     }
+
+    public void updateMedicationDisease(){
+        System.out.println("Enter the name of the medication and the new disease");
+        String name=scanner.nextLine();
+        String newDisease=scanner.nextLine();
+        service.updateMedicineDisease(name,newDisease);
+    }
+
+    public void printAllPatients(){
+        (service.getAllPatients()).forEach(System.out::println);
+    }
+
+    public void addPatient(){
+        System.out.println("Enter the id, the name, the age and the diagnosis");
+        int id= scanner.nextInt();
+        scanner.nextLine();
+        String name=scanner.nextLine();
+        int age=scanner.nextInt();
+        scanner.nextLine();
+        String diagnosis=scanner.nextLine();
+        service.addPatient(id,name,age,diagnosis);
+    }
+
+    public void deletePatient(){
+        System.out.println("Enter the id of the patient to delete");
+        int id=scanner.nextInt();
+        service.deletePatient(id);
+    }
+
+    public void updatePationtAge(){
+        System.out.println("Enter the id of the patient and the new age");
+        int id= scanner.nextInt();
+        scanner.nextLine();
+        int age= scanner.nextInt();
+        scanner.nextLine();
+
+        service.updatePacientAge(id,age);
+    }
+
+    public void updatePatientName(){
+        System.out.println("Enter the id of the patient and the new name");
+        int id= scanner.nextInt();
+        scanner.nextLine();
+        String name=scanner.nextLine();
+        service.updatePatientName(id,name);
+
+    }
+
+
+    public void updatePatientDiagnosis(){
+        System.out.println("Enter the id of the patient and the new diagnosis");
+        int id= scanner.nextInt();
+        scanner.nextLine();
+        String diagnosis=scanner.nextLine();
+        service.updatePatientDiagnosis(id,diagnosis);
+
+    }
+
+    public void prescribeMedicationToPatient(){
+        System.out.println("Enter the id of the patient and the name of the medication to be prescribed");;
+        int id=scanner.nextInt();
+        scanner.nextLine();
+        String name=scanner.nextLine();
+        service.prescribeMedication(id,name);
+    }
+
+    public void deletePrescribedMedicationForPatitent(){
+        System.out.println("Enter the id of the patient and the name of the medication to be deleted ");;
+        int id=scanner.nextInt();
+        scanner.nextLine();
+        String name=scanner.nextLine();
+        service.removePrescribedMedication(id,name);
+    }
+
+    public void filterPatientsByDiagnosis(){
+        System.out.println("Enter the diagnosis to filter by");
+        String diagnosis=scanner.nextLine();
+        service.filterPatientsByDiagnosis(diagnosis);
+    }
+
+    public void customersThatWerePrescribedGivenMedicine(){
+        System.out.println("Enter the disease");
+        String disease=scanner.nextLine();
+        (service.patientsWithMedicationPrescribedFOrGiveDisease(disease)).forEach(System.out::println);
+    }
+
+    public void sortPaticentsMedicationsByPrice(){
+        System.out.println("Enter the id of the patient you want to sort the medications of");
+        int id= scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Do you want to sort the patient medications by price ");
+        System.out.println("1.Ascending");
+        System.out.println("2.Descending");
+        int choice;
+        while (true) {
+            try {
+                String input = scanner.nextLine();
+                if (!input.matches("\\d+")) {
+                    throw new Exception("Input must be a number.");
+                }
+                choice = Integer.parseInt(input);
+                if (choice < 0 || choice > 2) {
+                    throw new Exception("Please enter a number between 0 and 2.");
+                }
+                break;
+            } catch (Exception e) {
+                System.out.println("Invalid input: " + e.getMessage());
+                System.out.print("Please select a valid option: ");
+            }
+        }
+
+        switch (choice) {
+            case 1 -> {
+                (service.sortMedicinesPrescribedForPatientByPriceAscending(id)).forEach(System.out::println);
+            }
+            case 2 -> (service.sortMedicinesPrescribedForPatientByPriceDescending(id)).forEach(System.out::println);
+        }
+    }
+
+
+
+
+
 
 }

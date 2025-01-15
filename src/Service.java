@@ -12,7 +12,7 @@ public class Service {
     }
 
 
-    public List<Patient> getAllCustomers() {
+    public List<Patient> getAllPatients() {
         return patientRepo.getAll();
 
     }
@@ -126,7 +126,7 @@ public class Service {
     }
 
 
-    public boolean deleteFMedicine(String name){
+    public boolean deleteMedicine(String name){
         if(name==null){
             return false;
         }
